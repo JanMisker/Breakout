@@ -128,12 +128,12 @@ var totalMotion = 0;
         }
         if (totalMotion > 0) {
             if(hero.getX() <= (viewWidth - hero.getWidth())){
-                hero.move(totalMotion);
+                hero.move(totalMotion*2);
             }
         } else if (totalMotion < 0) {
             if(hero.getX() >= 0){
                 
-                hero.move(totalMotion);
+                hero.move(totalMotion*2);
             }
         }
         totalMotion = 0;
