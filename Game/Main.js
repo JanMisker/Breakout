@@ -16,6 +16,8 @@ var score = 0;
 var bricks = [];
 var text = [];
 
+var totalMotion = 0;
+
  window.onload = function() {
     
     // Open game engine
@@ -82,6 +84,11 @@ var text = [];
             }else{ nextColum++; }
             
         }
+        
+        // register for motion updates
+        if (window.DeviceMotionEvent) {
+            window.addEventListener('devicemotion', processMotion, false);
+        }
     }
     
     // Loop / update
@@ -95,6 +102,10 @@ var text = [];
         
     }
     
+    // process motion events
+    function processMotion(evt) {
+        totalMotion -= evt.accelerationIncludingGravity.y;
+    }
     
     // Update function for player
     function updatePlayerMovement(){
@@ -115,6 +126,17 @@ var text = [];
                 hero.move(-1);
             }
         }
+        if (totalMotion > 0) {
+            if(hero.getX() <= (viewWidth - hero.getWidth())){
+                hero.move(totalMotion);
+            }
+        } else if (totalMotion < 0) {
+            if(hero.getX() >= 0){
+                
+                hero.move(totalMotion);
+            }
+        }
+        totalMotion = 0;
     }
     
     function updateBallMovement(){
